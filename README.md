@@ -13,10 +13,10 @@
 | Task     	| id              	| integer  	|
 |          	| task_name         | string   	|
 |          	| task_content      | text    	|
-|          	| deadline        	| string   	|
+|          	| deadline        	| date   	|
 |          	| status            | string   	|
 |          	| priority          | string   	|
-|          	| usre_id         	| references|
+|          	| user_id         	| references|
 
 <br>
 <br>
@@ -31,6 +31,6 @@
 
 | モデル名 	 | カラム名        	   | データ型 	|
 |----------	|-----------------	|----------	|
-| Task_label| id              	| integer  	|
-|          	| task_id           | refarences|
-|          	| label_id          | refarences|
+|Task_label | id              	| integer  	|
+|          	| task_id           | references|
+|          	| label_id          | references|
