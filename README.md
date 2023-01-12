@@ -13,7 +13,7 @@
 | Task     	| id              	| integer  	|
 |          	| task_name         | string   	|
 |          	| task_content      | text    	|
-|          	| deadline        	| date   	|
+|          	| deadline        	| date   	  |
 |          	| status            | string   	|
 |          	| priority          | string   	|
 |          	| user_id         	| references|
