@@ -1,29 +1,3 @@
-<%= form_with(model: Task.new, local: true ) do |form| %>
-  <div class="task_title">
-    <%= form.label :"タスク名"%>
-    <%= form.text_field :task_title %>
-  </div>
+<h2>タスク新規作成</h2>
 
-  <div class="task_content" >
-    <%= form.label :"詳しい内容" %>
-    <%= form.text_field :task_content %>
-  </div>
-
-  <div class="deadline" >
-    <%= form.label :"終了期限" %>
-    <%= form.date_select :deadline %>
-  </div>
-
-  <div class="status" >
-    <%= form.label :"ステータス" %>
-    <%= form.text_field :status%>
-  </div>
-
-  <div class="priority" >
-    <%= form.label :"優先度" %>
-    <%= form.text_field :priority %>
-  </div>
-
-  <%= form.submit"登録" %>
-
-  <% end %>
+<%= render 'form' %>
