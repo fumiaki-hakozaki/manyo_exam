@@ -1,0 +1,43 @@
+<%= form_with(model: @task, local: true, url: choose_new_or_edit ) do |form| %>
+  <% if @task.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= @task.errors.count %>件エラーがあります。</h2>
+      <ul>
+
+      <%= @task.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="task_name">
+    <%= form.label :"タスク名:"%>
+    <%= form.text_field :task_name %>
+  </div>
+
+  <div class="task_content" >
+    <%= form.label :"詳しい内容:" %>
+    <%= form.text_field :task_content %>
+  </div>
+
+  <div class="deadline" >
+    <%= form.label :"終了期限:" %>
+    <%= form.date_select :deadline %>
+  </div>
+
+  <div class="status" >
+    <%= form.label :"ステータス:" %>
+    <%= form.text_field :status%>
+  </div>
+
+  <div class="priority" >
+    <%= form.label :"優先度:" %>
+    <%= form.text_field :priority %>
+  </div>
+
+  <%= form.submit"登録" %>
+
+  <% end %>
+  <br>
+  <%= link_to 'タスク一覧に戻る', tasks_path %>
