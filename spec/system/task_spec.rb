@@ -23,6 +23,14 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(page).to have_content 'タスクネーム設定'
       end
     end
+    context 'タスクが作成日時の降順に並んでいる場合' do
+      it '新しいタスクが一番上に表示される' do
+        task = FactoryBot.create(:second_task)
+        visit tasks_path(task)
+        task_list = page.all('.task_low')
+        expect(task_list.first).to have_content 'セカンドタスク'
+      end
+    end
   end
   describe '詳細表示機能' do
      context '任意のタスク詳細画面に遷移した場合' do
