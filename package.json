@@ -1,5 +1,8 @@
 {
   "name": "manyo_exam",
+  "engines": {
+    "node": "16.18.1"
+  },
   "private": true,
   "dependencies": {
     "@rails/actioncable": "^6.0.0",

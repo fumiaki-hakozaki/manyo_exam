@@ -1,7 +1,7 @@
 FactoryBot.define do
 
   factory :task do
-    task_name {'タスクネーム設定'}
+    task_name {'nagasaki'}
     task_content {'タスクネーム設定'}
     deadline {'Wed, 11 Jan 2023'}
     status {'タスクネーム設定'}
