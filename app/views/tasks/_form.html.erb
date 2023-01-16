@@ -28,7 +28,7 @@
 
   <div class="status" >
     <%= form.label :"ステータス:" %>
-    <%= form.text_field :status%>
+    <%= form.select :status,Task.statuses.keys, { include_blank: "選択してください"} %>
   </div>
 
   <div class="priority" >
