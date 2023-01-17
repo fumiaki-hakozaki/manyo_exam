@@ -1,5 +1,14 @@
 <h1>タスク一覧</h1>
 
+<%= form_with url: tasks_path, method: :get, scope: :search, local: true do |form| %>
+  <h4>検索</h4>
+  <%= form.label :task_name,"タスク名:"%>
+  <%= form.text_field :task_name %>
+  <%= form.label :status,"ステータス:"%>
+  <%= form.select :status, Task.statuses.keys,{ include_blank: "選択してください"}%>
+  <%= form.submit "検索", name:nil%>
+<% end %>
+
 <P><%= notice %></p>
 
 <table>

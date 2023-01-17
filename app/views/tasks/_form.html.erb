@@ -12,22 +12,22 @@
   <% end %>
 
   <div class="task_name">
-    <%= form.label :"タスク名:"%>
+    <%= form.label :task_name,"タスク名:"%>
     <%= form.text_field :task_name %>
   </div>
 
   <div class="task_content" >
-    <%= form.label :"詳しい内容:" %>
+    <%= form.label :task_content,"詳しい内容:" %>
     <%= form.text_field :task_content %>
   </div>
 
   <div class="deadline" >
-    <%= form.label :"終了期限:" %>
+    <%= form.label :deadline,"終了期限:" %>
     <%= form.date_field :deadline %>
   </div>
 
   <div class="status" >
-    <%= form.label :"ステータス:" %>
+    <%= form.label :status,"ステータス:" %>
     <%= form.select :status,Task.statuses.keys, { include_blank: "選択してください"} %>
   </div>
 
