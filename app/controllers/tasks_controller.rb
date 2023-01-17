@@ -4,8 +4,8 @@ class TasksController < ApplicationController
 
     if params[:sort_expired]
       @tasks = Task.all.order(deadline: "ASC")
-    else
-      @tasks = Task.all.order(deadline: "DESC")
+    else params[:sort_priority]
+      @tasks = Task.sort_priority
     end
 
     if params[:search].present?

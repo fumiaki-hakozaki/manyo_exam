@@ -33,7 +33,7 @@
 
   <div class="priority" >
     <%= form.label :"優先度:" %>
-    <%= form.text_field :priority %>
+    <%= form.select :priority, Task.priorities.keys,{ include_blank: "選択してください"} %>
   </div>
 
   <%= form.submit"登録" %>
