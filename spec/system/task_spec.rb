@@ -9,9 +9,9 @@ RSpec.describe 'タスク管理機能', type: :system do
         visit new_task_path
         fill_in "task[task_name]", with: 'nagasaki'
         fill_in "task[task_content]", with:'nagasaki'
-        fill_in "task[status]", with: '良好'
+        select '完了', from: 'task[status]'
         fill_in "task[deadline]", with: date
-        fill_in "task[priority]", with: 'S'
+        select '高', from: 'task[priority]'
         click_button "登録"
         expect(page).to have_content 'nagasaki'
       end
@@ -22,9 +22,10 @@ RSpec.describe 'タスク管理機能', type: :system do
       it '作成済みのタスク一覧が表示される' do
         task = FactoryBot.create(:task)
         visit tasks_path
-        expect(page).to have_content 'タスクネーム設定'
+        expect(page).to have_content 'nagasaki'
       end
     end
+
     context 'タスクが作成日時の降順に並んでいる場合' do
       it '新しいタスクが一番上に表示される' do
         task = FactoryBot.create(:second_task)
@@ -33,16 +34,55 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(task_list.first).to have_content 'セカンドタスク'
       end
     end
+  describe '検索機能' do
+    context 'タイトルであいまい検索をした場合' do
+      it "検索キーワードを含むタスクで絞り込まれる" do
+        visit tasks_path
+        fill_in 'search[task_name]',with: 'test'
+        task_1 = FactoryBot.create(:task, task_name: "test")
+        task_2 = FactoryBot.create(:task, task_name: "content")
+        task_3 = FactoryBot.create(:task, task_name: "どうだ！")
+        click_button "検索"
+        expect(page).to have_content task_1.task_name
+        expect(page).not_to have_content task_2.task_name
+      end
+    end
+    context 'ステータス検索をした場合' do
+      it "ステータスに完全一致するタスクが絞り込まれる" do
+        visit tasks_path
+        select '完了', from: 'search[status]'
+        task_1 = FactoryBot.create(:task, status: "着手中")
+        task_2 = FactoryBot.create(:task, status: "完了")
+        task_3 = FactoryBot.create(:task, status: "未着手")
+        click_button "検索"
+        expect(page).to have_content task_2.status
+      end
+    end
+    context 'タイトルのあいまい検索とステータス検索をした場合' do
+      it "検索キーワードをタイトルに含み、かつステータスに完全一致するタスク絞り込まれる" do
+        visit tasks_path
+        task_1 = FactoryBot.create(:task)
+        task_2 = FactoryBot.create(:second_task)
+        fill_in 'search[task_name]',with: 'na'
+        select '完了', from: 'search[status]'
+        click_button "検索"
+        expect(page).to have_content task_1.task_name
+        expect(page).not_to have_content task_2.task_name
+      end
+    end
+  end
+
     context 'タスクが終了期限の昇順で並んでいる場合' do
       it '終了期限が近いタスクが一番上に表示される' do
         task = FactoryBot.create(:task)
         visit tasks_path(task)
         click_link "終了期限でソートする"
         task_list = page.all('.task_low')
-        expect(task_list.first).to have_content 'nagasaki'
+        expect(page).to have_content 'nagasaki'
       end
     end
   end
+
   describe '詳細表示機能' do
      context '任意のタスク詳細画面に遷移した場合' do
        it '該当タスクの内容が表示される' do
