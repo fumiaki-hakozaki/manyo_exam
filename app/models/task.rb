@@ -4,6 +4,7 @@ class Task < ApplicationRecord
   enum status:{ '未着手':0, '着手中':1, '完了':2 }
   enum priority:{ '低':0, '中':1, '高':2 }
   scope :sort_priority, ->{order(priority: :DESC)}
+  scope :default_order, ->{order(created_at: :DESC)}
 
   scope :search_status, -> (status){
     return if status.blank?
