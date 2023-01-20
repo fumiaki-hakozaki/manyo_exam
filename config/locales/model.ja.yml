@@ -3,6 +3,7 @@ ja:
     models:
       task: タスク
       user: ユーザー
+      deadline: 終了期日
     attributes:
       task:
         task_name: タスク名
