@@ -7,7 +7,9 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      redirect_to user_path(@user.id)
+      flash.now[:notice] = 'アカウント作成しました！'
+      session[:user_id] = @user.id
+      redirect_to user_path(@user.id), notice:'ログインしました！'
     else
       render :new
     end
@@ -15,6 +17,9 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+      unless @user == current_user
+        redirect_to tasks_path, notice: 'ログインidとアクセスidが一致しません'
+      end
   end
 
   private

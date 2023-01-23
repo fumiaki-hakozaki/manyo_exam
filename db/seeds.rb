@@ -12,5 +12,5 @@
   password = "password"
     
 
-    User.create(name: name, email: email, password: password )
+    User.create(name: name, email: email, password: password, admin: true )
 end
