@@ -1,5 +1,5 @@
 class Admin::UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :destroy]
+  before_action :set_user, only: [:show, :update, :edit, :destroy]
   # before_action :if_not_admin
 
   def index
@@ -13,14 +13,31 @@ class Admin::UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if user.save
-      redirect_to admin_users_path
+      redirect_to admin_users_path, notice:'ユーザーを作成'
     else
       render :new
     end
   end
 
   def show
-    @user = User.all
+  end
+
+  def edit
+
+  end
+
+  def update
+    if @user.update(user_params)
+      redirect_to admin_users_path, notice:'ユーザー情報を更新'
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    @user = User.find(params[:id])
+    @user.destroy
+    redirect_to admin_users_path, notice:'ユーザー情報を削除'
   end
 
 

@@ -1,5 +1,5 @@
-<h1>Sign up</h1>
-<%= notice %>
+<h1>・管理画面・ユーザー情報変更</h1>
+
 <% if @user.errors.any? %>
   <div id="error_explanation">
     <h2><%= pluralize(@user.errors.count,"error") %>prohibited this <%= @user.name %> from being saved:</h2>
@@ -11,7 +11,7 @@
   </div>
 <% end %>
 
-<%= form_with(model: @user, locale:true ) do |f| %>
+<%= form_with(model:@user, url: admin_user_path, locale:true ) do |f| %>
   <%= f.label :name %>
   <%= f.text_field :name %>
 
@@ -28,3 +28,4 @@
 
   <% end %>
 
+<%= link_to '・管理者画面・ユーザーの一覧へ', admin_users_path %>
