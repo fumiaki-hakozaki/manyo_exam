@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   def index
-    @tasks = current_user.tasks.includes(:user).page(params[:page]).per(3)
+    @tasks = current_user.tasks.includes(:user)
     if params[:sort_expired]
       @tasks = @tasks.order(deadline: "DESC")
     else params[:sort_priority]
@@ -12,6 +12,7 @@ class TasksController < ApplicationController
       .search_name(params[:search][:task_name])
       .search_status(params[:search][:status])
     end
+    @tasks = current_user.tasks.page(params[:page]).per(3)
   end
 
   def new
