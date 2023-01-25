@@ -11,14 +11,14 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       redirect_to user_path(@user.id), notice:'ログインしました！'
     else
-      render :new
+      redirect_to new_user_path, notice: 'Sing upできませんでした！'
     end
   end
 
   def show
     @user = User.find(params[:id])
       unless @user == current_user
-        redirect_to tasks_path, notice: 'ログインidとアクセスidが一致しません'
+        redirect_to tasks_path
       end
   end
 
