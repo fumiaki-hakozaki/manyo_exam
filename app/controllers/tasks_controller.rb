@@ -23,15 +23,12 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
-    if params[:back]
-      render :new
+    @task = current_user.tasks.build(task_params)
+    binding.pry
+    if @task.save
+      redirect_to task_path(@task), notice: 'タスクを作成しました'
     else
-      if @task.save
-        redirect_to tasks_path, notice: 'タスクを作成しました'
-      else
-        render :new
-      end
+      render :new
     end
   end
 
@@ -56,6 +53,7 @@ class TasksController < ApplicationController
 
   def confirm
     @task = Task.new(task_params)
+    @task.user = current_user
     render :new if @task.invalid?
   end
 
