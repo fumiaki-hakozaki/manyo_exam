@@ -1,6 +1,6 @@
 class Admin::UsersController < ApplicationController
   before_action :set_user, only: [:show, :update, :edit, :destroy]
-  # before_action :if_not_admin
+  before_action :if_not_admin
 
   def index
     @users = User.all
@@ -42,9 +42,9 @@ class Admin::UsersController < ApplicationController
 
 
   private
-  # def if_not_admin
-  #   redirect_to root_path current_user.admin?
-  # end
+  def if_not_admin
+    redirect_to root_path current_user.admin?
+  end
 
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation, :admin)
