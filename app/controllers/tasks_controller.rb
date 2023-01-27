@@ -1,10 +1,10 @@
 class TasksController < ApplicationController
   def index
-    @tasks = Task.all.page(params[:page]).per(3)
+    @tasks = current_user.tasks.includes(:user)
     if params[:sort_expired]
-      @tasks = Task.all.order(deadline: "DESC").page(params[:page]).per(3)
+      @tasks = @tasks.order(deadline: "DESC")
     else params[:sort_priority]
-      @tasks = Task.sort_priority.page(params[:page]).per(3)
+      @tasks = @tasks.sort_priority
     end
 
     if params[:search].present?
@@ -12,6 +12,7 @@ class TasksController < ApplicationController
       .search_name(params[:search][:task_name])
       .search_status(params[:search][:status])
     end
+    @tasks = current_user.tasks.page(params[:page]).per(3)
   end
 
   def new
@@ -23,15 +24,11 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
-    if params[:back]
-      render :new
+    @task = current_user.tasks.build(task_params)
+    if @task.save
+      redirect_to task_path(@task), notice: 'タスクを作成しました'
     else
-      if @task.save
-        redirect_to tasks_path, notice: 'タスクを作成しました'
-      else
-        render :new
-      end
+      render :new
     end
   end
 
@@ -56,6 +53,7 @@ class TasksController < ApplicationController
 
   def confirm
     @task = Task.new(task_params)
+    @task.user = current_user
     render :new if @task.invalid?
   end
 

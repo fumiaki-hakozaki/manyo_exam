@@ -15,4 +15,6 @@ class Task < ApplicationRecord
     return if task_name.blank?
     where('task_name LIKE ?', "%#{task_name}%")
   }
+
+  belongs_to :user
 end
