@@ -16,6 +16,11 @@ class Task < ApplicationRecord
     where('task_name LIKE ?', "%#{task_name}%")
   }
 
+  scope :search_label, -> (label_id) {
+    return if label_id.blank?
+    where(id: TaskLabel.where(label_id: label_id).pluck(:task_id))
+  }
+
   belongs_to :user
   has_many :task_labels, dependent: :destroy
   has_many :labels , through: :task_labels

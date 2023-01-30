@@ -11,6 +11,7 @@ class TasksController < ApplicationController
       @tasks = @tasks
       .search_name(params[:search][:task_name])
       .search_status(params[:search][:status])
+      .search_label(params[:search][:label_id])
     end
     @tasks = @tasks.page(params[:page]).per(3)
   end
