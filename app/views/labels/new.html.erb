@@ -1,2 +1,6 @@
-<h1>Labels#new</h1>
-<p>Find me in app/views/labels/new.html.erb</p>
+<%= form_with(model: @label, local: true) do |f| %>
+  <%= f.label :label_name %>
+  <%= f.text_field :label_name %>
+  <%= f.submit "作成する" %> 
+<% end %>
+<%= link_to 'ラベルの一覧画面へ', labels_path %>
