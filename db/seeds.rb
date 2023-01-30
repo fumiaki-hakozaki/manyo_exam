@@ -14,3 +14,7 @@
 
     User.create(name: name, email: email, password: password, admin: true )
 end
+
+3.times do |i|
+  Label.create!(label_name: "label#{i + 1}")
+end

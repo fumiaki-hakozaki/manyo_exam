@@ -1,22 +1,23 @@
 class TasksController < ApplicationController
   def index
+    @labels = Label.all
     @tasks = current_user.tasks.includes(:user)
     if params[:sort_expired]
       @tasks = @tasks.order(deadline: "DESC")
     else params[:sort_priority]
       @tasks = @tasks.sort_priority
     end
-
     if params[:search].present?
       @tasks = @tasks
       .search_name(params[:search][:task_name])
       .search_status(params[:search][:status])
     end
-    @tasks = current_user.tasks.page(params[:page]).per(3)
+    @tasks = @tasks.page(params[:page]).per(3)
   end
 
   def new
     @task = Task.new
+    @task.task_labels.build
   end
 
   def show
@@ -54,6 +55,7 @@ class TasksController < ApplicationController
   def confirm
     @task = Task.new(task_params)
     @task.user = current_user
+    @labels = Label.all
     render :new if @task.invalid?
   end
 
@@ -61,6 +63,6 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:task_name, :task_content, :deadline, :status, :priority)
+    params.require(:task).permit(:task_name, :task_content, :deadline, :status, :priority, :user_id, { label_ids:[] } )
   end
 end
