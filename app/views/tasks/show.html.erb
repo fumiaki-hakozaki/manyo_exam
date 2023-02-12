@@ -5,5 +5,8 @@
 <p>終了期限: <%= @task.deadline %></p>
 <p>ステータス: <%= @task.status %></p>
 <p>優先度: <%= @task.priority %></p>
+<% @task.labels.each do |label| %>
+  <p>ラベル: <%= label.label_name  %></p>
+<% end %>
 <br>
 <%= link_to 'タスク一覧に戻る', tasks_path %>

@@ -12,6 +12,7 @@
     <th>ステータス</th>
     <th>優先度</th>
     <th>ユーザー名</th>
+    <th>ラベル名</th>
     <th>登録日時</th>
   </tr>
 <% @tasks.each do |task| %>
@@ -21,7 +22,12 @@
     <td><%= task.deadline %></td>
     <td><%= task.status %></td>
     <td><%= task.priority %></td>
-    <td><%= task.user.name %>
+    <td><%= task.user.name %></td>
+    <td>
+    <% task.labels.each do |label| %>
+      <%= label.label_name %>
+    <% end %>
+    </td>
     <td><%= l task.created_at, format: :default %></td>
     <td><%= link_to '詳細', task_path(task.id), class:"btn btn-outline-primary" %></td>
     <td><%= link_to '編集', edit_task_path(task.id), data: { confirm: '本当に編集していいですか？' },class:"btn btn-outline-success" %></td>
@@ -32,3 +38,4 @@
 </table>
 <%= link_to 'タスク一覧に戻る', tasks_path %>
 <%= link_to '新しくタスクを作成', new_task_path %>
+<%= link_to 'ラベル作成画面へ', new_label_path %>
